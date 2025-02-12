@@ -7,6 +7,19 @@ from langchain.document_loaders import NotebookLoader, TextLoader
 
 
 def vector_db(embeddings, code):
+    """Creates and persists a vector database using Chroma from given embeddings and code documents.
+    
+    Args:
+        embeddings (Embeddings): The embedding function to use for vectorizing the documents.
+        code (List[Document]): A list of code documents to be added to the vector database.
+    
+    Returns:
+        Chroma: A persisted Chroma vector database instance.
+    
+    Raises:
+        OSError: If there are issues with file system operations during directory removal or creation.
+        ChromaError: If there are issues with Chroma database operations.
+    """
     collection_name = "db_collection"
     local_directory = "db_" + st.session_state["db_name"]
     persist_directory = os.path.join(os.getcwd(), local_directory)
@@ -27,6 +40,17 @@ def vector_db(embeddings, code):
 
 
 def load_to_db(repo_path):
+    """Loads and processes files from a given repository path into a format suitable for database insertion.
+    
+    Args:
+        repo_path (str): The path to the repository containing the files to be processed.
+    
+    Returns:
+        list: A list of processed document chunks ready for database insertion.
+    
+    Raises:
+        Exception: Catches and silently ignores any exceptions during file loading and processing.
+    """
     docs = []
     for root, dirs, files in os.walk(repo_path):
         dirs[:] = [d for d in dirs if not d.startswith('.')]
