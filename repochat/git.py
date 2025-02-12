@@ -5,6 +5,20 @@ from .untils import url_name, clone_repo
 
 
 def git_form(repo_path):
+    """Generates a GitHub repository link input form in the Streamlit sidebar and processes the submitted URL.
+    
+    Args:
+        repo_path (str): The local path where the repository will be cloned.
+    
+    Returns:
+        tuple: A tuple containing two elements:
+            - str: The name of the database derived from the GitHub URL.
+            - int: A status code (1) indicating successful execution.
+    
+    Raises:
+        requests.exceptions.MissingSchema: If the provided URL is invalid or missing the scheme.
+    
+    """
     with st.sidebar:
         st.title("GitHub Link")
         with st.form("git"):
