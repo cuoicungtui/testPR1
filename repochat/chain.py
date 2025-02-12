@@ -5,6 +5,15 @@ from langchain.chains import ConversationalRetrievalChain
 from .untils import model_prompt, custom_que_prompt
 
 def response_chain(db, llm):
+    """Creates and returns a conversational retrieval chain for question answering.
+    
+    Args:
+        db (VectorStore): The vector database to use for retrieval.
+        llm (BaseLLM): The language model to use for question answering.
+    
+    Returns:
+        ConversationalRetrievalChain: A configured conversational retrieval chain for question answering.
+    """
     retriever = db.as_retriever()
     search_kwargs = {
         "k": 5,
